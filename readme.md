@@ -24,6 +24,12 @@ This is a Node.js server that uses Tesseract OCR Version 5 to extract text and b
     node server.js
     ```
 
+### Testing
+check unit test using the Jest and supertest:
+    ```sh
+    npm test
+    ```
+
 The server will start on port 3000.
 
 ## API Endpoints
