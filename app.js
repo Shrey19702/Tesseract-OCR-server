@@ -4,9 +4,8 @@ const Tesseract = require('tesseract.js');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = 3000;
 
-//limit request size(image size) by 10mb
+//limit request size(image size) by 10mb, parse json
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
@@ -54,9 +53,7 @@ app.post('/api/get-bboxes', upload.none(), (req, res) => {
 
     //extract bbox from image buffer
     const imageBuffer = Buffer.from(base64_image, 'base64');
-    Tesseract.recognize(imageBuffer, 'eng', {
-        logger: m => console.log(m),
-    })
+    Tesseract.recognize(imageBuffer, 'eng')
     .then(({ data }) => {
         let bboxes;
         switch (bbox_type) {
@@ -105,6 +102,4 @@ app.post('/api/get-bboxes', upload.none(), (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+exports.app = app;
